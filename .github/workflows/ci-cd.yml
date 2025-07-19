@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Backend - Java
       - name: Set up JDK 11
@@ -25,7 +25,7 @@ jobs:
         run: mvn clean verify
       
       - name: Upload JaCoCo report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: back/target/site/jacoco/
@@ -45,7 +45,7 @@ jobs:
         run: npm test -- --watch=false --code-coverage
         
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: front-coverage
           path: front/coverage/
@@ -54,7 +54,7 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: sonarsource/sonarcloud-github-action@master
         with:
           projectBaseDir: .
@@ -66,7 +66,7 @@ jobs:
     needs: sonarcloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Login to Docker Hub
         uses: docker/login-action@v2
