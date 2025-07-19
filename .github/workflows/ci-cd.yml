@@ -30,7 +30,7 @@ jobs:
           
       - name: Build and test backend
         working-directory: back
-        run: 
+        run: |  
           mvn clean package -DskipTests
           mvn verify
       
