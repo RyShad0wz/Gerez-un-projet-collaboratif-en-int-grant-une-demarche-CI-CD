@@ -42,7 +42,7 @@ jobs:
         
       - name: Run frontend tests
         working-directory: front
-        run: npm test -- --watch=false --code-coverage
+        run: npm test -- --watch=false --code-coverage --browsers=ChromeHeadless
         
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
@@ -55,7 +55,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: sonarsource/sonarcloud-github-action@master
+      
+      - name: Download backend reports
+        uses: actions/download-artifact@v4
+        with:
+          name: jacoco-report
+          path: back/target/site/jacoco/
+      
+      - name: Download frontend reports
+        uses: actions/download-artifact@v4
+        with:
+          name: front-coverage
+          path: front/coverage/
+      
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
           projectBaseDir: .
         env:
@@ -64,6 +78,7 @@ jobs:
 
   docker-build:
     needs: sonarcloud
+    if: github.ref == 'refs/heads/main'  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
