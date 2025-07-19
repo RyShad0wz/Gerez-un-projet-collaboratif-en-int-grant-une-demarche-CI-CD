@@ -85,6 +85,13 @@ jobs:
           name: front-coverage
           path: front/coverage/
       
+      - name: Download compiled backend classes
+        uses: actions/download-artifact@v4
+        with:
+          name: java-classes
+          path: back/target/classes/
+
+      
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
