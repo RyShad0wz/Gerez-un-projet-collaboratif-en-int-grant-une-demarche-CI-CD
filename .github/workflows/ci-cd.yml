@@ -22,7 +22,7 @@ jobs:
 
       - name: Verify Java build output
         working-directory: back
-        run: |
+        run: 
           echo "=== Fichiers compilés ==="
           find target/classes -type f
           echo "=== Rapports JaCoCo ==="
